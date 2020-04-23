@@ -1,0 +1,16 @@
+body {
+  font-family: sans-serif;
+}
+
+.playfield {
+}
+
+.playfield-row {
+  display: flex;
+}
+
+.playfield-field {
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+}
