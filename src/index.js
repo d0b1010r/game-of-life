@@ -1,4 +1,6 @@
 import "./styles.css";
+import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { getNextGameboard, isFieldValueAlive } from "./gameboard";
 
 function renderGameboard(gameboard) {
@@ -8,7 +10,7 @@ function renderGameboard(gameboard) {
         `<div class="gameboard-row">${row
           .map(
             (field) =>
-              `<div class="gameboard-field"><div class="gameboard-cell gameboard-cell--${
+              `<div class=""><div class="gameboard-cell gameboard-cell--${
                 isFieldValueAlive(field) ? "alive" : "dead"
               }"></div></div>`
           )
@@ -17,26 +19,99 @@ function renderGameboard(gameboard) {
     .join("")}</div>`;
 }
 
-function render(gameboard) {
-  document.getElementById("app").innerHTML = `
-  ${renderGameboard(gameboard)}
-`;
+function Gameboard({ gameboard }) {
+  return (
+    <div className="gameboard">
+      {gameboard.map((gameboardRow, rowIndex) => {
+        return (
+          <div className="gameboard-row" key={`${rowIndex}`}>
+            {gameboardRow.map((gameboardField, columnIndex) => (
+              <div
+                className="gameboard-field"
+                key={`${rowIndex}-${columnIndex}`}
+              >
+                <Cell field={gameboardField}></Cell>
+              </div>
+            ))}
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
-function play() {
-  let gameboard = [
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-  ];
-
-  render(gameboard);
-  setInterval(() => {
-    gameboard = getNextGameboard(gameboard);
-    render(gameboard);
-  }, 1000);
+function Cell({ field }) {
+  return (
+    <div
+      className={`gameboard-cell gameboard-cell--${
+        isFieldValueAlive(field) ? "alive" : "dead"
+      }`}
+    ></div>
+  );
 }
 
-play();
+const initialGameboard = [
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 1, 0, 0, 0],
+  [0, 0, 1, 0, 0, 0],
+  [0, 0, 1, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+];
+
+function App() {
+  const [gameboard, setGameboard] = useState(initialGameboard);
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newGameboard = getNextGameboard(gameboard);
+      setGameboard(newGameboard);
+      console.log("This will run every second!");
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds((seconds) => seconds + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div>
+      <header className="App-header">
+        {seconds} seconds have elapsed since mounting.
+      </header>
+      <Gameboard gameboard={gameboard}></Gameboard>
+    </div>
+  );
+}
+
+function App() {
+  const [gameboard, setGameboard] = useState(initialGameboard);
+  const [test, setTest] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setGameboard((prevGameboard) => getNextGameboard(prevGameboard));
+      console.log("DEBUG This will run every second!");
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds((seconds) => seconds + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div>
+      <Gameboard gameboard={gameboard}></Gameboard>
+    </div>
+  );
+}
+
+ReactDOM.render(<App></App>, document.querySelector("#app"));
