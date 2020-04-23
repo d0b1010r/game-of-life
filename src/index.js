@@ -3,21 +3,21 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { getNextGameboard, isFieldValueAlive } from "./gameboard";
 
-function renderGameboard(gameboard) {
-  return `<div class="gameboard">${gameboard
-    .map(
-      (row) =>
-        `<div class="gameboard-row">${row
-          .map(
-            (field) =>
-              `<div class=""><div class="gameboard-cell gameboard-cell--${
-                isFieldValueAlive(field) ? "alive" : "dead"
-              }"></div></div>`
-          )
-          .join("")}</div>`
-    )
-    .join("")}</div>`;
-}
+// function renderGameboard(gameboard) {
+//   return `<div class="gameboard">${gameboard
+//     .map(
+//       (row) =>
+//         `<div class="gameboard-row">${row
+//           .map(
+//             (field) =>
+//               `<div class=""><div class="gameboard-cell gameboard-cell--${
+//                 isFieldValueAlive(field) ? "alive" : "dead"
+//               }"></div></div>`
+//           )
+//           .join("")}</div>`
+//     )
+//     .join("")}</div>`;
+// }
 
 function Gameboard({ gameboard }) {
   return (
