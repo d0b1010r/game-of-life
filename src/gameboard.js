@@ -45,8 +45,12 @@ function countNeighbors(gameboard, rowIndex, columnIndex) {
 function isFieldAlive(gameboard, rowIndex, columnIndex) {
   // lazy boundary checking
   try {
-    return gameboard[rowIndex][columnIndex] === 1 ? true : false;
+    return isFieldValueAlive(gameboard[rowIndex][columnIndex]);
   } catch (err) {
     return false;
   }
+}
+
+export function isFieldValueAlive(fieldValue) {
+  return fieldValue === 1 ? true : false;
 }

@@ -2,15 +2,43 @@ body {
   font-family: sans-serif;
 }
 
-.playfield {
+html,
+body {
+  height: 100%;
 }
 
-.playfield-row {
+.app {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gameboard {
+  border: 1px solid lightgrey;
+  border-width: 1px 0 0 1px;
+}
+
+.gameboard-row {
   display: flex;
 }
 
-.playfield-field {
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
+.gameboard-field {
+  width: 30px;
+  height: 30px;
+  border: 1px solid lightgray;
+  border-width: 0 1px 1px 0;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.gameboard-cell {
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+}
+.gameboard-cell--alive {
+  background-color: green;
+}
+.gameboard-cell--dead {
 }
