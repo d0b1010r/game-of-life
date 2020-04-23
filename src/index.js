@@ -60,36 +60,6 @@ const initialGameboard = [
 
 function App() {
   const [gameboard, setGameboard] = useState(initialGameboard);
-  const [seconds, setSeconds] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const newGameboard = getNextGameboard(gameboard);
-      setGameboard(newGameboard);
-      console.log("This will run every second!");
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSeconds((seconds) => seconds + 1);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        {seconds} seconds have elapsed since mounting.
-      </header>
-      <Gameboard gameboard={gameboard}></Gameboard>
-    </div>
-  );
-}
-
-function App() {
-  const [gameboard, setGameboard] = useState(initialGameboard);
   const [test, setTest] = useState(0);
 
   useEffect(() => {
